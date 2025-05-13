@@ -49,26 +49,26 @@ sudo foremost -t all -v -i /dev/sdb -o hasil-recovery
 
 1. Instal terlebih dahulu (jika belum)
 
-```
-sudo apt update
-sudo apt install foremost
-```
+   ```
+   sudo apt update
+   sudo apt install foremost
+   ```
 2. Gunakan untuk recovery file dari SD card atau USB
 
-```
-sudo foremost -i /dev/sdb -o hasil-recovery
-```
+   ```
+   sudo foremost -i /dev/sdb -o hasil-recovery
+   ```
 3. Atau dari image file
 
-```
-sudo foremost -i sdcard.img -o hasil-recovery
-```
+   ```
+   sudo foremost -i sdcard.img -o hasil-recovery
+   ```
 
 4. Filter hanya tipe file tertentu (misal hanya JPG)
    
-```
-sudo foremost -t jpg -i /dev/sdb -o hasil-jpg
-```
+   ```
+   sudo foremost -t jpg -i /dev/sdb -o hasil-jpg
+   ```
 
 ### Contoh Kasus Final
 
@@ -80,3 +80,27 @@ lsblk (list block devices) adalah perintah di Linux yang digunakan untuk melihat
 - Mengetahui nama device seperti /dev/sda, /dev/sdb, dll
 - Melihat ukuran, partisi, dan status mount (apakah sudah terpasang atau belum)
 
+   ```
+   lsblk
+   ```
+Karena foremost tidak bisa dijalankan ke device yang sedang terpasang (mounted), kamu perlu unmount dulu sda1:
+
+1. Unmount terlebih dahulu:
+   
+   ```
+   sudo umount /dev/sda1
+   ```
+> Jika ada pesan error (misalnya sedang dipakai), pastikan tidak sedang dibuka di file manager atau program lain.
+
+2. Jalankan Foremost
+
+   Setelah unmount, kamu bisa langsung gunakan foremost seperti ini:
+
+   ```
+   sudo foremost -t all -v -i /dev/sda -o hasil-recovery
+   ```
+   Penjelasan:
+   - -t all = recovery semua tipe file (jpg, png, pdf, dll)
+   - -v = tampilkan proses detail
+   - -i /dev/sda = scan seluruh SD card (bukan hanya partisinya)
+   - -o hasil-recovery = simpan hasil di folder hasil-recovery (nanti otomatis dibuat)
